@@ -1,0 +1,25 @@
+# Ambientes virtuais Python
+.venv
+venv/
+env/
+__pycache__/
+*.egg-info/
+
+# Arquivos de configuração
+.env
+.env.*
+credentials.json
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs e temporários
+*.log
+*.tmp
