@@ -1,5 +1,7 @@
 from services.gemini_service import interpretar_despesa
 from services.sheets_service import adicionar_linha
+import time
+
 
 # ==============================
 # Memória temporária de despesas
@@ -35,7 +37,7 @@ def processar_despesa(message, bot):
             cancelar_despesa(bot, message)
             return
         else:
-            bot.send_message(chat_id, "Voltando ao menu principal...")
+            bot.send_message(chat_id, "Voltando ao menu principal...Digite /start para ver as opções.")
             DESPESAS_PENDENTES.pop(chat_id, None)
             return 
 
@@ -44,6 +46,10 @@ def processar_despesa(message, bot):
         return
 
     try:
+        # mostra "digitando..."
+        bot.send_chat_action(chat_id, 'typing')
+        time.sleep(1.5)  # sensação de processamento
+
         # 🔑 AQUI ESTÁ A CORREÇÃO
         despesa = interpretar_despesa(
             texto_usuario=texto,
@@ -98,8 +104,8 @@ def confirmar_despesa(bot, message):
         f"🗓️ *Mês:* {despesa.get('mes_pagamento', '-')}\n"
         f"🏷️ *Categoria:* {despesa.get('categoria', '-')}\n"
         f"💳 *Pagamento:* {despesa.get('meio_pagamento', '-')}\n\n"
-        f"👉 Para listar despesas do mês, use /listar\n"
-        f"👉 Para um mês específico, use /listar <mês>\n\n"
+        f"👉 Para listar despesas do mês, use /listar ou use /listar <mês>\n"
+        f"👉 Lembrando que para registrar uma nova despesa use /despesa\n\n"
         f"💬 Agora você pode continuar falando com o bot abaixo.",
 
         parse_mode="markdown"
